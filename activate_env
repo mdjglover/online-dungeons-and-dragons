@@ -1,0 +1,4 @@
+. venv/bin/activate;
+export FLASK_APP=online_dungeons_and_dragons;
+export FLASK_ENV=development;
+echo 'Flask environment activated.';

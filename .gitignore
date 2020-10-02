@@ -1,0 +1,8 @@
+/venv/
+/.vscode/
+/*.egg-info/
+/instance/
+/online_dungeons_and_dragons/__pycache__/
+*/__pycache__/
+*.pyc
+/.coverage

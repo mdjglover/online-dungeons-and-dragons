@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="center">{% block title %}{{ room['room_name'] }} - Room Code: {{ room['room_code'] }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<a id="back_btn" href="#">Back</a>
+<div class="row mt-3">
+    <div class="col-md-7">
+        <div class="row">
+            <button id="new_character_btn" class="btn btn-primary m-3" type="button">New</button>
+            <button id="load_character_btn" class="btn btn-primary m-3" type="button">Load</button>
+        </div>
+        <div id="character_sheet_container" class="accordion">
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="input-group">
+            <textarea id="chat" type="text" readonly class="form-control-plaintext border" rows="15"></textarea>
+        </div>
+
+        <div class="input-group">
+            <input id="text" type="text" class="form-control" placeholder="Enter message">
+            <div class="input-group-append">
+              <button id="send_text_btn" class="btn btn-outline-secondary" type="button">Submit</button>
+            </div>
+        </div>
+
+
+        <form class="my-3">
+            <div class="form-row">
+                <h3>Dice Roller</h3>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="num_dice">No. dice: </label>
+                    <input type="number" class="form-control" id="num_dice" value="1" min="1" required>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="dice_type">Dice type:</label>
+                    <select class="custom-select" id="dice_type" required>
+                        <option value="4">d4</option>
+                        <option value="6">d6</option>
+                        <option value="8">d8</option>
+                        <option value="12">d12</option>
+                        <option value="20" selected>d20</option>
+                        <option value="100">d100</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="modifier">Modifier:</label>
+                    <input type="number" class="form-control" id="modifier" value="0" required>
+                </div>
+                <button id='roll_dice' type="button" class="btn btn-primary">Roll Dice</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script id="character_sheet_template" type="text/html">
+        {% include "user/character_sheet.html" %}
+    </script>
+    <script>
+        var socket;
+        var characters = [];
+        var active_character = 0;
+
+        let default_character = {
+            name: "",
+            name_header: "New character",
+            background: "",
+            race: "",
+            alignment: "",
+            xp: 0,
+            class: "",
+            level: 1,
+            personality_traits: "",
+            ideals: "",
+            bonds: "",
+            flaws: "",
+
+            hp_current: 0,
+            hp_max: 0,
+            temporary_hp: 0,
+            armour_class: 0,
+            initiative: 0,
+            speed: 0,
+            hit_dice: "",
+            death_save_successes: 0,
+            death_save_failures: 0,
+            saving_throw_strength: true,
+            saving_throw_dexterity: false,
+            saving_throw_constitution: false,
+            saving_throw_intelligence: false,
+            saving_throw_wisdom: false,
+            saving_throw_charisma: false,
+
+            inspiration: 0,
+            proficiency_bonus: 0,
+            passive_perception: 0,
+            strength: 10,
+            dexterity: 10,
+            constitution: 10,
+            intelligence: 10,
+            wisdom: 10,
+            charisma: 10,
+            acrobatics: false,
+            animal_handling: false,
+            arcana: false,
+            athletics: false,
+            deception: false,
+            history: false,
+            insight: false,
+            intimidation: false,
+            investigation: false,
+            medicine: false,
+            nature: false,
+            perception: false,
+            performance: false,
+            persuasion: false,
+            religion: false,
+            sleight_of_hand: false,
+            stealth: false,
+            survival: false,
+        };
+        $(document).ready(function(){            
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/rooms');
+            setup_socketio_events();
+            setup_character_sheets();
+            add_event_listeners();
+        });
+
+        function setup_socketio_events() {
+            socket.on('connect', function() {
+                socket.emit('joined', {});
+            });
+            socket.on('status', function(data) {
+                $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
+                $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            });
+            socket.on('message', function(data) {
+                $('#chat').val($('#chat').val() + data.msg + '\n');
+                $('#chat').scrollTop($('#chat')[0].scrollHeight);
+            });
+        }
+
+        function setup_character_sheets() {
+            
+        }
+
+        function add_event_listeners() {
+            add_navigation_listeners();
+            add_messenging_listeners();
+            add_new_character_sheet_listeners();
+        }
+
+        function add_navigation_listeners() {
+            $('#back_btn').click(function(e) {
+                leave_room();
+            });
+        }
+        
+
+        function add_messenging_listeners() {
+            $('#text').keypress(function(e) {
+                var code = e.which;
+                if (code == 13) {
+                    send_message();
+                }
+            });
+            $('#send_text_btn').click(function(e) {
+                send_message();
+            });
+            $('#roll_dice').click(function(e){
+                roll_dice();
+            });
+        }
+
+        function add_new_character_sheet_listeners() {
+            $('#new_character_btn').click(function(e) {
+                new_character_sheet();
+            });
+            $('#load_character_btn').click(function(e) {
+                load_character();
+            });
+        }
+
+        function leave_room() {
+            socket.emit('left', {}, function() {
+                socket.disconnect();
+
+                // go back to user home
+                window.location.href = "{{ url_for('user.home') }}";
+            });
+        }
+
+        function send_message(){
+            character_name = characters[active_character]['name'];
+            text = $('#text').val();
+            $('#text').val('');
+            socket.emit('text', {'character_name': character_name, 'msg': text});
+        }
+
+        function roll_dice(){
+            let character_name = $('#character_name').val();
+            let num_dice = $('#num_dice').val();
+            let dice_type = $('#dice_type option:selected').val();
+            let modifier = $('#modifier').val();
+            let message = {
+                'character_name': character_name,
+                'num_dice': num_dice,
+                'dice_type': dice_type,
+                'modifier': modifier
+            };
+            socket.emit('dice_roll', message)
+        }
+
+        function load_character() {
+            
+        }
+
+        function new_character_sheet(){
+            add_character_sheet(default_character);
+            active_character = default_character;
+        }
+
+        function add_character_sheet(character) {
+            let sheet_number = characters.length;
+            characters.push(character);
+            character = add_character_index_ids(character, sheet_number);
+            var new_sheet = $('<div>').loadTemplate("#character_sheet_template", character);
+            new_sheet = fix_character_sheet_ids(new_sheet, sheet_number);
+            new_sheet = add_character_sheet_status_listeners(new_sheet, sheet_number);
+            $('#character_sheet_container').append(new_sheet.children());
+            active_character = sheet_number;
+        }
+
+        function add_character_index_ids(character, sheet_number) {
+            data_ids_to_add = [
+                'character_sheet',
+                'collapse_heading',
+                'character_sheet_save_btn', 
+                'character_sheet_remove_btn',
+                'character_sheet_collapse',
+                'info_tab',
+                'vitality_tab',
+                'stats_tab',
+                'attacks_spells_tab',
+                'character_info',
+                'character_vitality',
+                'character_stats',
+                'character_attacks_spells'
+                ];
+            
+            for (var i = 0; i < data_ids_to_add.length; i++) {
+                character[data_ids_to_add[i]] = data_ids_to_add[i] + sheet_number;
+            }
+
+            return character;
+        }
+
+        function fix_character_sheet_ids(new_sheet, sheet_number) {
+            new_sheet.find('#collapse_heading' + sheet_number).attr('data-target', '#character_sheet_collapse' + sheet_number);
+            new_sheet.find('#info_tab' + sheet_number).attr('href', '#character_info' + sheet_number);
+            new_sheet.find('#vitality_tab' + sheet_number).attr('href', '#character_vitality' + sheet_number);
+            new_sheet.find('#stats_tab' + sheet_number).attr('href', '#character_stats' + sheet_number);
+            new_sheet.find('#attacks_spells_tab' + sheet_number).attr('href', '#character_attacks_spells' + sheet_number);
+
+            return new_sheet;
+        }
+
+        function add_character_sheet_status_listeners(new_sheet, sheet_number) {
+            new_sheet.find('#collapse_heading' + sheet_number).click(function() {
+                active_character = sheet_number;
+            })
+            new_sheet.find('#character_sheet_save_btn' + sheet_number).click(function() {
+                save_character_sheet(sheet_number);
+            });
+            new_sheet.find('#character_sheet_remove_btn' + sheet_number).click(function() {
+                remove_character_sheet(sheet_number);
+            });
+            return new_sheet;
+        }
+
+        function save_character_sheet(sheet_number) {
+            active_character = sheet_number;
+            var input_fields = $('#character_sheet' + sheet_number + ' input');
+            input_fields.each(function() {
+                var attribute = $(this).attr('data-value');
+                var value = $(this).val();
+                characters[sheet_number][attribute] = value;
+            });
+            var new_character = false;
+            var add_to_room = false;
+
+            if (!('id' in characters[sheet_number])){
+                new_character = true;
+                add_to_room = true;
+            }
+
+            $.ajax({
+                url: "http://" + document.domain + "/user/save_character",
+                data: {
+                    'new_character': new_character,
+                    'add_to_room': add_to_room,
+                    'character': active_character
+                },
+                type: 'POST',
+                success: function(data){
+                    if (new_character) {
+                        characters[sheet_number]['id'] = data['id'];
+                    }
+                }
+            });
+        }
+
+        function remove_character_sheet(sheet_number) {
+            $('#character_sheet' + sheet_number).remove();
+            characters[sheet_number] = {};
+        }
+        
+    </script>
+{% endblock %}

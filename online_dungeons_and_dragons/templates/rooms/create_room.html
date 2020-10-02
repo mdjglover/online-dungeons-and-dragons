@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Create Room{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="col-10 col-md-8 col-lg-6 ml-auto mr-auto">
+        <form class="form justify-content-center" method="post">
+            <div class="form-group">
+                <label for="room_name">Room Name:</label>
+                <input type="text" name="room_name" id="room_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password (optional):</label>
+                <input type="text" name="password" id="password">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Create Room</button>
+        </form>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,4 @@
+include online_dungeons_and_dragons/schema.sql
+graft online_dungeons_and_dragons/static
+graft online_dungeons_and_dragons/templates
+global-exclude *.pyc

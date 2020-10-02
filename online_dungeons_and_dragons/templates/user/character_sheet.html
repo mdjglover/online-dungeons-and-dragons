@@ -1,0 +1,552 @@
+<div id="character_sheet" data-id="character_sheet" class="card" method="POST">
+    <div class="card-header" id="character_heading">
+        <div class="row">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-id="collapse_heading" id="collapse_heading" data-toggle="collapse" data-target="#character_sheet_collapse" data-content="character_name" aria-expanded="true" aria-controls="info_collapse">
+                    New character
+                </button>
+            </h2>
+            <button class="btn btn-primary ml-auto" data-id="character_sheet_save_btn" id="character_sheet_save_btn" type="button">
+                Save
+            </button>
+            <button class="btn btn-primary mx-2" data-id="character_sheet_remove_btn" id="character_sheet_remove_btn" type="button">
+                Remove
+            </button>
+        </div>
+    </div>
+
+    <div data-id="character_sheet_collapse" id="character_sheet_collapse" class="collapse show" aria-labelledby="info_heading" data-parent="#character_sheet_container">
+        <div class="card-body">
+            <ul id="nav_tabs_bar" class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-id="info_tab" id="info_tab" data-toggle="tab" href="#character_info" role="tab" aria-controls="character_info" aria-selected="true">Info</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-id="vitality_tab" id="vitality_tab" data-toggle="tab" href="#character_vitality" role="tab">Vitality</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-id="stats_tab" id="stats_tab" data-toggle="tab" href="#character_stats" role="tab">Stats</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-id="attacks_spells_tab" id="attacks_spells_tab" data-toggle="tab" href="#character_attacks_spells" role="tab">Attacks/Spellcasting</a>
+                </li>
+
+            </ul>
+            <div class="tab-content" data-id="character_content">
+                <div class="tab-pane fade show active" data-id="character_info" id="character_info" role="tabpanel" aria-labelledby="character_info_tab">
+                    <div class="form-row my-2">
+                        <h3>Overview</h3>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Name</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="character_name">
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Background</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="background">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Race</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="race">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Alignment</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="alignment">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">XP</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="xp">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Class</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="class">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Level</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="level">   
+                        </div>
+                        
+                        <h3>Personality</h3>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Personality Traits</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="personality_traits">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Ideals</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="ideals">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Bonds</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="bonds">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Flaws</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="flaws">   
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" data-id="character_vitality" id="character_vitality" role="tabpanel" aria-labelledby="character_vitality_tab">
+                    <div class="form-row">
+                        <h3>Vitality</h3>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">HP</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="hp_current" placeholder="Current">
+                            <span class="input-group-text">/</span>
+                            <input type="number" class="form-control" data-value="hp_max" placeholder="Total">
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Temporary HP</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="temporary_hp">   
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Armour Class</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="armour_class">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Initiative</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="initiative">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Speed</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="speed">   
+                        </div>
+                        
+                        
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Hit Dice</span>
+                            </div>
+                            <input type="text" class="form-control" data-value="hit_dice">   
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Death Save Successes</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="death_save_successes">   
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Death Save Failures</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="death_save_failures">   
+                        </div>
+
+                        <h3>Saving Throws</h3>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Strength: </span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="saving_throw_strength">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="saving_throw_strength_modifier">+0</span>
+                            </div>
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Dexterity: </span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="saving_throw_dexterity">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="saving_throw_dexterity_modifier">+0</span>
+                            </div> 
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Constitution: </span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="saving_throw_constitution">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="saving_throw_constitution_modifier">+0</span>
+                            </div> 
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Intelligence: </span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="saving_throw_intelligence">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="saving_throw_intelligence_modifier">+0</span>
+                            </div> 
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Wisdom: </span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-content="saving_throw_wisdom">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="saving_throw_wisdom_modifier">+0</span>
+                            </div> 
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Charisma: </span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-content="saving_throw_charisma">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="saving_throw_charisma_modifier">+0</span>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" data-id="character_stats" id="character_stats" role="tabpanel" aria-labelledby="character_stats_tab">
+                    <div class="form-row">
+                        <h3>General</h3>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Inspiration</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="inspiration">
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Proficiency Bonus</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="proficiency_bonus">   
+                        </div>
+                    
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Passive Perception</span>
+                            </div>
+                            <input type="number" class="form-control" data-value="passive_perception">   
+                        </div>
+
+                        <h3>Stats</h3>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Strength: </span>
+                            </div>
+                            <input type="number" class="form-control" data-value="strength">
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="strength_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Dexterity: </span>
+                            </div>
+                            <input type="number" class="form-control" data-value="dexterity">
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="dexterity_modifier">+0</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Constitution: </span>
+                            </div>
+                            <input type="number" class="form-control" data-value="constitution">
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="constitution_modifier">+0</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Intelligence: </span>
+                            </div>
+                            <input type="number" class="form-control" data-value="intelligence">
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="intelligence_modifier">+0</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Wisdom: </span>
+                            </div>
+                            <input type="number" class="form-control" data-value="wisdom">
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="wisdom_modifier">+0</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Charisma: </span>
+                            </div>
+                            <input type="number" class="form-control" data-value="charisma">
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="charisma_modifier">+0</span>
+                            </div>
+                        </div>
+
+
+                        <h3>Skills</h3>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Acrobatics</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="acrobatics">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="acrobatics_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Animal Handling</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="animal_handling">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="animal_handling_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Arcana</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="arcana">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="arcana_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Athletics</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="athletics">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="athletics_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Deception</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="deception">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="deception_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">History</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="history">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="history_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Insight</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="insight">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="insight_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Intimidation</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="intimidation">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="intimidation_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Investigation</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="investigation">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="investigation_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Medicine</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="medicine">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="medicine_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Nature</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="nature">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="nature_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Perception</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="perception">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="perception_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Performance</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="performance">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="performance_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Persuasion</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="persuasion">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="persuasion_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Religion</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="religion">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="religion_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Sleight of Hand</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="sleight_of_hand">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="sleight_of_hand_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Stealth</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="stealth">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="stealth_modifier">+0</span>
+                            </div>
+                        </div>
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Survival</span>
+                                <span class="input-group-text">
+                                    <input type="checkbox" data-value="survival">   
+                                </span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" data-content="survival_modifier">+0</span>
+                            </div>
+                        </div>                
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" data-id="character_attacks_spells" id="character_attacks_spells" role="tabpanel" aria-labelledby="character_attacks_spells_tab">
+                    <div class="form-row">
+                        <p>To be continued...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="input-group my-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text"></span>
+        </div>
+        <input type="number" class="form-control" data-content="">   
+    </div> -->
+
+
+</div>

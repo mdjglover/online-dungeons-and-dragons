@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container my-3">
+        <h1>Rooms</h1>
+        <div class="row">
+            <a class="btn btn-primary mx-3" href="{{ url_for('rooms.create_room') }}" role="button">Create room</a>
+            <a class="btn btn-primary mx-3" href="{{ url_for('rooms.join_room') }}" role="button">Join room</a>
+        </div>
+        {% for room in joined_rooms %}
+        <div class="row bg-light position-relative border my-3 mx-1">
+            <div class="container">
+                <div class="row my-3">
+                    <div class="col-md-7">
+                        <h5 class="card-text">{{ room.room_name }}</h5>
+                    </div>
+                    <div class="col-md-4 ml-2">
+                        <p class="card-text"><b>Room Code:</b> {{ room.room_code }}</p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-7">
+                        <p><b>Character Name:</b></p>
+                    </div>
+                    <div class="col-md-4 ml-2">
+                        <p><b>Class:</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <a class="stretched-link" href="{{ url_for('rooms.room', room_code=room.room_code) }}"></a>
+
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container my-3">
+        <h1>Characters</h1>
+        <a class="btn btn-primary" href="{{ url_for('user.create_character') }}" role="button">Create new character</a>
+        {% for character in characters %}
+            <a href="{{ url_for('user.character', character_id=character.id) }}">{{ character.name }}</a>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
+
+
